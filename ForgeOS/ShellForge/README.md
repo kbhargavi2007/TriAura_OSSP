@@ -137,7 +137,7 @@ When the user enters the `exit` command, LinuxCore terminates the shell loop and
 
 ```text
 LinuxCore/
-│
+│__LunixCore.c
 ├── main.c
 └── README.md
 ```

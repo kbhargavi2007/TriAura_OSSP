@@ -1,0 +1,28 @@
+[08:03:42] QueueLess reception up: pid=649 pgid=649 sid=328, 1 doctors, 1 simulated minute = 250 ms
+[08:03:42] Dr.0 ready (pid 651)
+[08:04:59] signal 2 (Interrupt) -> graceful shutdown
+[08:04:59] Dr.0 (pid 651) exited with status 0
+[08:04:59] reception closed (0 served, 0 still waiting were dropped)
+[08:05:02] QueueLess reception up: pid=767 pgid=767 sid=328, 1 doctors, 1 simulated minute = 250 ms
+[08:05:02] Dr.0 ready (pid 769)
+[08:05:22] TRIAGE token #1 Ravi       -> NORMAL (assigned by the triage desk)
+[08:05:22] ADMIT  token #1 Ravi       age 66 Cardiology new NORMAL | predicted 15.0 min | ETA 0.0 min
+[08:05:22] CALL   token #1 Ravi       (Cardiology, NORMAL) -> Dr.0, predicted 15.0 min
+[08:05:31] DONE   token #1 Ravi       Dr.0: predicted 15.0 min, actual 33.5 min (error +18.5)
+[08:05:31] TRIAGE token #2 Zoya       -> EMERGENCY (assigned by the triage desk)
+[08:05:31] ADMIT  token #2 Zoya       age 30 Cardiology new EMERGENCY | predicted 40.6 min | ETA 0.0 min
+[08:05:31] CALL   token #2 Zoya       (Cardiology, EMERGENCY) -> Dr.0, predicted 40.6 min
+[08:05:34] DONE   token #2 Zoya       Dr.0: predicted 40.6 min, actual 14.6 min (error -25.9)
+[08:05:43] TRIAGE token #3 Arjun      -> URGENT (assigned by the triage desk)
+[08:05:43] ADMIT  token #3 Arjun      age 45 Cardiology new URGENT | predicted 32.8 min | ETA 0.0 min
+[08:05:43] CALL   token #3 Arjun      (Cardiology, URGENT) -> Dr.0, predicted 32.8 min
+[08:05:47] DONE   token #3 Arjun      Dr.0: predicted 32.8 min, actual 18.0 min (error -14.8)
+[08:11:23] signal 2 (Interrupt) -> graceful shutdown
+[08:11:23] Dr.0 (pid 769) exited with status 0
+[08:11:23] reception closed (3 served, 0 still waiting were dropped)
+[08:11:26] QueueLess reception up: pid=887 pgid=887 sid=328, 1 doctors, 1 simulated minute = 250 ms
+[08:11:26] estimator warm-started from 3 past consultations (qdata/records.dat)
+[08:11:26] Dr.0 ready (pid 889)
+[08:12:58] signal 2 (Interrupt) -> graceful shutdown
+[08:12:58] Dr.0 (pid 889) exited with status 0
+[08:12:58] reception closed (0 served, 0 still waiting were dropped)

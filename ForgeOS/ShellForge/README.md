@@ -136,10 +136,9 @@ When the user enters the `exit` command, LinuxCore terminates the shell loop and
 ## Project Structure
 
 ```text
-LinuxCore/
-│__LunixCore.c
-├── main.c
-└── README.md
+linuxcore_test/
+├── linucCore
+└── main.c
 ```
 
 ## How to Compile

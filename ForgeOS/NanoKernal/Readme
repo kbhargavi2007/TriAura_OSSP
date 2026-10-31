@@ -1,0 +1,292 @@
+# QueueLess – Smart Hospital/Clinic Waiting System
+
+## 1. Project Overview
+
+**QueueLess** is a Smart Hospital/Clinic Waiting System developed using C programming on Ubuntu Linux. It demonstrates how Operating System concepts can be applied to manage patient registration, priority-based scheduling, doctor allocation, and waiting-time estimation.
+
+The system simulates a hospital environment where patients are registered, assigned priorities by authorized triage staff, and scheduled for consultation based on their urgency.
+
+## 2. Objectives
+
+- To reduce inefficient patient queue management.
+- To implement priority-based patient scheduling.
+- To simulate multiple doctors using Linux processes.
+- To demonstrate inter-process communication and synchronization.
+- To estimate patient waiting times.
+- To demonstrate real-world applications of Operating System concepts.
+
+## 3. Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| C Programming | Application development |
+| Ubuntu Linux | Operating environment |
+| GCC | C compiler |
+| POSIX Threads | Multithreading |
+| Linux System Calls | Process management |
+| Makefile | Compilation and build automation |
+| Bash | Automated testing |
+
+## 4. System Architecture
+
+The project consists of five main programs:
+
+| Program | Description |
+|---|---|
+| `qserver.c` | Main reception server and scheduling system |
+| `qclient.c` | Patient registration kiosk |
+| `qtriage.c` | Authorized patient priority assignment |
+| `qdoctor.c` | Simulates doctor processes and consultations |
+| `qstatus.c` | Displays live patient queue and doctor status |
+
+### Working Flow
+
+1. Patients register through the patient kiosk.
+2. Triage staff assign patient priorities.
+3. The server maintains a priority-based waiting queue.
+4. The scheduler selects patients for available doctors.
+5. Doctor processes handle simulated consultations.
+6. The status program displays the current queue and doctor information.
+
+## 5. Operating System Concepts Implemented
+
+The project demonstrates the following concepts:
+
+### Process Management
+- `fork()` – Creates child processes.
+- `exec()` – Executes doctor programs.
+- `waitpid()` – Monitors child process termination.
+- Process lifecycle management.
+
+### CPU Scheduling
+- Priority Scheduling.
+- Shortest Job First (SJF) based on predicted consultation time.
+- Aging to prevent starvation.
+- Preemptive scheduling for emergency patients.
+
+### Inter-Process Communication (IPC)
+- Anonymous Pipes.
+- Named Pipes (FIFO).
+- Signals.
+- Memory-mapped communication.
+
+### Memory Management
+- Virtual memory.
+- Dynamic memory allocation.
+- `mmap()`.
+- Demand paging.
+- Copy-on-Write.
+- Page fault demonstration.
+
+### Process Synchronization
+- Mutex locks.
+- Semaphores.
+- Condition variables.
+- Read-write locks.
+- Race condition handling.
+- Deadlock demonstration.
+
+### File Management
+- File descriptors.
+- File I/O system calls.
+- File metadata and inode information.
+- Memory-mapped file I/O.
+
+## 6. Scheduling Algorithm
+
+QueueLess uses a priority-based scheduling approach.
+
+Patient priority levels:
+
+| Priority | Description |
+|---|---|
+| Emergency (E) | Highest priority |
+| Urgent (U) | Medium priority |
+| Normal (N) | Lowest priority |
+
+Within each priority level, patients are scheduled using predicted remaining consultation time, with aging to reduce starvation.
+
+When an emergency patient arrives, the system can interrupt a lower-priority consultation and schedule the emergency patient.
+
+The interrupted patient is returned to the waiting queue.
+
+**Note:** Patient priority is assigned by authorized triage staff. The system does not perform medical diagnosis.
+
+## 7. Waiting-Time Estimation
+
+The project estimates patient waiting time using historical consultation data.
+
+Features include:
+
+- Historical consultation-time records.
+- Exponential averaging.
+- Online learning and correction.
+- Doctor-specific speed adjustment.
+- Waiting-time range estimation.
+- Continuous ETA updates.
+
+Completed consultation records are stored in `qdata/records.dat` and used for future predictions.
+
+## 8. Installation and Execution
+
+### Requirements
+
+- Ubuntu Linux
+- GCC compiler
+- Make utility
+- POSIX-compatible Linux environment
+
+### Step 1: Install required packages
+
+```bash
+sudo apt update
+sudo apt install build-essential
+```
+
+### Step 2: Navigate to the project directory
+
+```bash
+cd QueueLess
+```
+
+### Step 3: Compile the project
+
+```bash
+make clean
+make
+```
+
+This generates the following executable programs:
+
+- qserver
+- qclient
+- qtriage
+- qdoctor
+- qstatus
+
+### Step 4: Start the server
+
+```bash
+./qserver -n 3 -s 250
+```
+
+Here:
+- `-n 3` specifies three doctor processes.
+- `-s 250` sets one simulated minute to 250 milliseconds.
+
+### Step 5: Register patients
+
+Register a normal patient:
+
+```bash
+./qtriage -n Ravi -a 66 -d 1 -v new -c 5 -r 1 -p N
+```
+
+Register an emergency patient:
+
+```bash
+./qtriage -n Zoya -a 30 -d 1 -v new -c 1 -r 0 -p E
+```
+
+Register an urgent patient:
+
+```bash
+./qtriage -n Arjun -a 45 -d 1 -v new -c 3 -r 0 -p U
+```
+
+### Step 6: Display the live queue
+
+```bash
+./qstatus -w
+```
+
+### Step 7: Run automated priority tests
+
+Stop the running server and execute:
+
+```bash
+make test
+```
+
+The test script verifies emergency preemption, priority scheduling, and prevention of patient self-assigned priority through the kiosk.
+
+## 9. Project Directory Structure
+
+```text
+QueueLess/
+│
+├── Makefile
+├── README.md
+├── queueless.h
+├── oslab.h
+├── oslab.c
+│
+├── qserver.c
+├── qclient.c
+├── qtriage.c
+├── qdoctor.c
+├── qstatus.c
+│
+├── test_priority.sh
+│
+└── qdata/
+    ├── queueless.log
+    └── records.dat
+```
+
+## 10. Testing and Validation
+
+The project includes an automated test script to validate:
+
+1. Emergency patients can preempt normal consultations.
+2. Emergency patients are scheduled before urgent and normal patients waiting in the queue.
+3. Urgent patients are scheduled before normal patients.
+4. Patients cannot independently assign emergency priority through the registration kiosk.
+5. Triage priority assignment is required before scheduling.
+
+Run the tests using:
+
+```bash
+make test
+```
+
+## 11. Advantages
+
+- Efficient patient queue management.
+- Priority-based patient handling.
+- Emergency patient preemption.
+- Multiple doctor process simulation.
+- Waiting-time estimation.
+- Practical implementation of Operating System concepts.
+- Live monitoring of patient and doctor status.
+
+## 12. Limitations
+
+- Doctor consultations are simulated rather than actual medical consultations.
+- The application runs on a single Linux machine.
+- Patient priority depends on authorized human triage.
+- Estimated waiting times are predictions and may differ from actual consultation times.
+
+## 13. Future Enhancements
+
+- Develop a graphical user interface.
+- Add database integration.
+- Implement remote patient registration.
+- Add SMS or notification alerts.
+- Develop a web-based hospital dashboard.
+- Support multiple hospitals and network communication.
+
+## 14. Conclusion
+
+QueueLess demonstrates the practical implementation of Operating System concepts through a smart hospital waiting-system simulation.
+
+By integrating process management, CPU scheduling, inter-process communication, memory management, synchronization, and file management, the project provides a practical understanding of how operating systems manage multiple processes and shared resources.
+
+The project connects theoretical Operating System concepts with a real-world hospital queue management problem.
+
+---
+
+**Project Name:** QueueLess – Smart Hospital/Clinic Waiting System  
+**Domain:** Operating Systems  
+**Programming Language:** C  
+**Platform:** Ubuntu Linux

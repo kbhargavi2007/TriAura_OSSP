@@ -1,2 +1,0 @@
-My LinuxCore v6.0 project
-This is a test of file writing.

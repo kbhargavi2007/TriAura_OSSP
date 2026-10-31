@@ -1,95 +1,182 @@
 # LinuxCore – Custom Linux Shell
 
-## 📌 About the Project
+## About the Project
 
 LinuxCore is a custom Linux shell developed using the C programming language as part of the Operating Systems and Systems Programming (OSSP) project.
 
-It provides a command-line interface where users can enter commands to interact with the Linux operating system. The project demonstrates how a shell accepts user input, executes commands, and uses operating system features.
+It provides its own command prompt and supports basic Linux commands, system information, process management, file operations, and execution of external Linux commands.
 
-## 🎯 Objectives
+## Team Members
 
-- To develop a simple custom Linux shell using C.
-- To understand how command execution works in Linux.
-- To demonstrate process creation and management.
-- To perform basic file operations.
-- To explore system information and Linux resources.
+| Student ID | Name |
+|---|---|
+| 2520030074 | K. Bhargavi |
+| 2520030603 | M. Siri Chandana |
+| 2520030300 | G. Nandini |
 
-## ⚙️ Features
+## Features
 
-- **help** – Displays available commands.
-- **pwd** – Displays the current working directory.
-- **cd** – Changes the current directory.
-- **ls** – Lists files and directories.
-- **echo** – Displays text.
-- **history** – Displays previously entered commands.
-- **sysinfo** – Displays system information.
-- **cpu** – Displays CPU information.
-- **memory** – Displays memory information.
-- **processes** – Lists running process IDs.
-- **disk** – Displays disk usage information.
-- **date** – Displays the current date and time.
-- **createfile** – Creates a new file.
-- **permissions** – Displays file permissions.
-- **readfile** – Reads and displays file contents.
-- **writefile** – Writes text into a file.
-- **clear** – Clears the terminal screen.
-- **exit** – Exits LinuxCore.
-- **External commands** – Runs supported installed Linux commands.
+- Basic Linux commands
+- Command history
+- System information
+- CPU and memory information
+- Process information
+- Disk usage information
+- File creation, reading, and writing
+- File permission checking
+- External command execution
+- Date and time display
 
-## 🛠️ Technologies Used
+## Technologies Used
 
-- **Programming Language:** C
-- **Operating System:** Linux / Ubuntu
-- **Environment:** WSL2 (Windows Subsystem for Linux)
-- **Compiler:** GCC
-- **Concepts:** System Calls, Process Management, File Handling, and Shell Programming
+- C Programming Language
+- Linux Operating System
+- GCC Compiler
+- Linux System Calls
+- Process Management using `fork()`, `execvp()`, and `waitpid()`
+- Linux `/proc` filesystem
 
-## ▶️ How to Compile and Run
+## Detailed Implementation
 
-### 1. Clone the Repository
+LinuxCore is implemented in C using a command-processing approach. It continuously accepts commands from the user, identifies the entered command, and performs the corresponding operation.
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+### 1. Shell Initialization
+
+When the program starts, LinuxCore displays its welcome message and initializes the command prompt.
+
+The shell enters a continuous loop where it waits for the user to enter a command. This loop continues until the user enters the `exit` command.
+
+### 2. Command Input and Processing
+
+LinuxCore accepts commands through the terminal using standard input functions.
+
+The entered command is read and processed. The shell identifies the command name and separates it from its arguments.
+
+Based on the command entered, LinuxCore decides whether it is a built-in command or an external Linux command.
+
+### 3. Built-in Command Execution
+
+Some commands are directly implemented inside the shell. These are called built-in commands.
+
+Examples include:
+
+- `cd` – Changes the current working directory.
+- `pwd` – Displays the present working directory.
+- `echo` – Displays the given text.
+- `history` – Displays previously entered commands.
+- `clear` – Clears the terminal screen.
+- `exit` – Terminates the shell.
+
+These commands are handled directly by LinuxCore without creating a separate process.
+
+### 4. External Command Execution
+
+LinuxCore also supports commands that are not directly implemented inside the shell.
+
+For executing external commands, it uses Linux process management system calls:
+
+- **fork():** Creates a child process.
+- **execvp():** Executes the requested external command in the child process.
+- **waitpid():** Makes the parent shell wait for the child process to complete.
+
+This allows users to execute external Linux commands through the LinuxCore prompt.
+
+### 5. System Information
+
+LinuxCore provides commands to display information about the system.
+
+- `sysinfo` – Displays general system information.
+- `cpu` – Displays CPU-related information.
+- `memory` – Displays memory usage information.
+- `disk` – Displays disk space information.
+- `date` – Displays the current date and time.
+
+These features use Linux system information and system interfaces to retrieve the required details.
+
+### 6. Process Management
+
+The `processes` command displays information about currently running processes.
+
+LinuxCore uses the Linux `/proc` filesystem to identify process information. Numeric directory names inside `/proc` represent process IDs (PIDs).
+
+This helps users understand how processes are represented and managed in Linux.
+
+### 7. File Handling
+
+LinuxCore provides basic file operations through its own commands.
+
+- `createfile` – Creates a new file.
+- `readfile` – Reads and displays the contents of a file.
+- `writefile` – Writes content into a file.
+
+These operations demonstrate file handling using C programming and Linux file operations.
+
+### 8. File Permissions
+
+The `permissions` command displays the permission details of a specified file.
+
+It helps users understand the permission categories in Linux:
+
+- Owner permissions
+- Group permissions
+- Other user permissions
+
+For example, `644` represents read and write permissions for the owner and read-only permissions for the group and others.
+
+### 9. Command History
+
+LinuxCore maintains a history of commands entered during the shell session.
+
+The `history` command allows users to view previously executed commands. This makes it easier to track the commands used during a session.
+
+### 10. Shell Termination
+
+When the user enters the `exit` command, LinuxCore terminates the shell loop and ends the program execution.
+
+## Project Structure
+
+```text
+LinuxCore/
+│
+├── main.c
+└── README.md
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with your actual GitHub repository URL.
+## How to Compile
 
-### 2. Open the Project Folder
-
-```bash
-cd LinuxCore_test
-```
-
-Use the actual repository folder name if it differs.
-
-### 3. Compile the Program
+Open the Linux terminal and navigate to the project directory.
 
 ```bash
 gcc -Wall -Wextra -std=c11 main.c -o linuxcore
 ```
 
-### 4. Run LinuxCore
+## How to Run
 
 ```bash
 ./linuxcore
 ```
 
-## 🧠 Operating System Concepts Demonstrated
+After execution, the LinuxCore command prompt will appear.
 
-- **Shell as a Service Layer:** Provides a user interface to interact with Linux.
-- **Process Management:** Uses `fork()`, `execvp()`, and `waitpid()` to execute external commands.
-- **File Systems:** Uses file operations to create, read, write, and inspect files.
-- **System Information:** Reads Linux system information from available system interfaces.
-- **Command Execution:** Accepts user commands and processes them.
+## Available Commands
 
-## 📚 Learning Outcomes
-
-Through this project, we learned the basics of shell programming, process creation, command execution, file handling, and interaction with Linux system resources.
-
-## 🎓 Project Purpose
-
-LinuxCore was developed as an academic project for learning and demonstrating Operating Systems and Systems Programming concepts through a simple custom shell.
-
-## 📄 License
-
-This project is intended for educational purposes.
+| Command | Description |
+|---|---|
+| `help` | Displays available commands |
+| `pwd` | Shows the current directory |
+| `cd` | Changes the directory |
+| `ls` | Lists files and directories |
+| `echo` | Displays text |
+| `history` | Displays command history |
+| `sysinfo` | Shows system information |
+| `cpu` | Displays CPU information |
+| `memory` | Displays memory information |
+| `processes` | Lists running processes |
+| `disk` | Displays disk usage |
+| `date` | Shows date and time |
+| `createfile` | Creates a new file |
+| `readfile` | Reads file contents |
+| `writefile` | Writes content into a file |
+| `permissions` | Displays file permissions |
+| `clear` | Clears the terminal |
+| `exit` | Exits LinuxCore |
